@@ -16,7 +16,7 @@ class PostsController extends Controller
 
     public function create()
     {
-        return view('posts/create'); //kan köra med . istället för slash
+        return view('posts.create'); //kan köra med . istället för slash
     }
 
     public function store()
@@ -29,10 +29,7 @@ class PostsController extends Controller
 
         $imagePath = request('image')->store('uploads', 'public');
 
-        $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200, function ($constraint) {
-            $constraint->upsize();
-            $constraint->aspectRatio();
-        }); //Intervention Image Package
+        $image = Image::make(public_path("storage/{$imagePath}"))->orientate()->fit(1200, 1200); //Intervention Image Package
         $image->save();
 
         auth()->user()->posts()->create([
