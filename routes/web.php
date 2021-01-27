@@ -17,13 +17,12 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Auth::routes();
 
 Route::post('follow/{user}', [FollowController::class, 'store']); //follow axios vue
 
-Auth::routes();
+Route::get('/', [PostsController::class, 'index']);
 Route::get('p/create', [PostsController::class, 'create']);
 Route::get('p/{post}', [PostsController::class, 'show']);
 Route::post('/p', [PostsController::class, 'store']);

@@ -14,6 +14,13 @@ class PostsController extends Controller
         $this->middleware('auth');
     }
 
+    public function index()
+    {
+        $users = auth()->user()->following()->pluck('profiles.user_id'); //user_id under profiles table
+        $posts = Post::whereIn('user_id', $users)->with('user')->latest()->paginate(5); //istället gör get() kör vi paginate() för att styra hur många vi vill visa per sida //istället för orderBy('created_at', 'DESC') så kör vi en kortare latest()
+        return view('posts.index', compact('posts'));
+    }
+
     public function create()
     {
         return view('posts.create'); //kan köra med . istället för slash
