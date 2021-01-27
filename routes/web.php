@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FollowController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfilesController;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('follow/{user}', [FollowController::class, 'store']); //follow axios vue
 
 Auth::routes();
 Route::get('p/create', [PostsController::class, 'create']);
